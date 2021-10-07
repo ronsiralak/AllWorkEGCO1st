@@ -1,0 +1,143 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<string.h>
+int action,escape_check,fight_action,defend_checker;
+struct player
+{
+    char name[20];
+    int hp,atk,gold;
+    int item[10];
+};
+struct player tester = { "test" ,100,50,200,{0,0,0,0,0,0,0,0,0,0}};
+struct monster
+{
+    char name[20];
+    int hp,atk,drop;
+    char item[20];
+};
+struct monster slime = {"slime",200 , 5,3,"Slime_ball"};
+
+int escape(){
+
+    escape_check=rand()%10;
+    if(escape_check>6){
+        printf("escape success\n");
+        found();
+
+    }else {
+        tester.hp = tester.hp-slime.atk;
+        if(tester.hp<=0){
+                dead();}
+        printf("cant escape\n");
+        printf("result player hp: %d\n mon hp: %d\n",tester.hp,slime.hp);
+        fight();
+
+    }
+}
+
+int fight(){
+    while(tester.hp>0 && slime.hp>0){
+    printf("fighting select choice **out of these mean escape\n");
+    fight_action=0;
+    printf(" 1:attack\n");
+    printf(" 2:def\n");
+    printf(" 3:item\n");
+    printf(" 4:escape\n");
+    scanf(" %d",&fight_action);
+        switch (fight_action){
+            case 1 : attack(); break;
+            case 2 : defend(); break;
+            case 3 : use_item(); break;
+            case 4 : escape();break;
+            default : escape();break;
+    }
+    }
+}
+int attack(){
+    slime.hp = slime.hp-tester.atk;
+    tester.hp = tester.hp-slime.atk;
+    printf("result player hp: %d\n mon hp: %d\n",tester.hp,slime.hp);
+    if(tester.hp<=0) dead();
+    if(tester.hp>0 && slime.hp<=0) win_slime();
+
+}
+int defend(){
+    defend_checker=rand()%10;
+    if(defend_checker>4){
+        printf("defend success\n");
+        tester.hp--;
+
+    }else {
+        printf("cant defend\n");
+       tester.hp = tester.hp-slime.atk;
+    }
+    if(tester.hp<=0) dead();
+    printf("result player hp: %d\n mon hp: %d\n",tester.hp,slime.hp);
+
+}
+int use_item(){
+    tester.hp = tester.hp+100;
+    tester.hp = tester.hp-slime.atk;
+    if(tester.hp<=0) dead();
+    printf("result player hp: %d\n mon hp: %d\n",tester.hp,slime.hp);
+}
+int dead(){
+    printf("You dead\n");
+    printf("You position is 1 hp is %d\n",tester.hp);
+    tester.hp = 50;
+    slime.hp = slime.hp+tester.atk;
+    tester.atk=10;
+}
+int win_slime(){
+    printf("Congratulation you win \n");
+    tester.gold+=slime.drop;
+    tester.item[6]++;
+    printf("You get %d gold and a %s \n",slime.drop,slime.item);
+    printf("Now you have %d gold\n",tester.gold);
+}
+int equip(int a,int b){
+
+int eq_hp=a,eq_atk=b;
+tester.atk =50;
+tester.hp = 100;
+    tester.hp = tester.hp+eq_hp;
+    tester.atk = tester.atk+eq_atk;
+printf("You has hp %d and atk %d \n", tester.hp, tester.atk);
+}
+int found(){
+
+        printf("found MON select choice **out of these mean fight\n");
+        escape_check=0;
+        printf(" 1:fight\n");
+        printf(" 2:escape\n");
+        scanf(" %d",&action);
+        switch (action){
+            case 1 : fight(); break;
+            case 2 : escape();break;
+            default : fight(); break;
+        }
+}
+int merchant(){
+int input;
+printf("You come in to buy something select 1 thing to buy **out of these mean nothing\n");
+printf("Welcome to my shop\n");
+printf("NO. of item   Price\n");
+    printf(" 1:potion(+100 hp)   50 gold\n");
+    printf(" 2:wooden sword (+10 atk,+50hp)    100 gold\n");
+    printf(" 3:iron sword(+25 atk,+100hp)    200 gold\n");
+scanf(" %d",&input);
+switch (input){
+            case 1 : tester.item[0]+=1; tester.gold -= 50; break;
+            case 2 : equip(50,10); tester.gold -= 100;break;
+            case 3 : equip(100,25); tester.gold -= 200; break;
+            default :  break;
+        }
+printf("%s has %d gold \n",tester.name,tester.gold);
+}
+int main()
+{
+    srand(time(NULL));
+    merchant();
+    found();
+}

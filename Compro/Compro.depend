@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1571836648 source:c:\users\ron\documents\c\after16.9\project_1.c
+	<stdio.h>
+	<windows.h>
+	<MMsystem.h>
+

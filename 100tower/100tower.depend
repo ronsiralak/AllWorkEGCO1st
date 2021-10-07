@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1572283221 source:c:\users\ron\documents\c\after16.9\project_1.c
+	<stdio.h>
+	<string.h>
+
+1573186656 source:c:\users\ron\documents\c\100tower\dice_roll.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+
+1573186630 source:c:\users\ron\documents\c\after16.9\test_bug.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+

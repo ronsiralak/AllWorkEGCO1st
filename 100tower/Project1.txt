@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include<string.h>
+int map[100];
+char player_name[20];
+struct player
+{
+    char name[20];
+    int hp,atk;
+    int item[10];
+};
+struct monster
+{
+    char name[20];
+    int hp,atk;
+    char drop[20];
+};
+int create_map(){
+for(int i =0;i<100;i++){
+    map[i]=i+1;
+}
+}
+int attack(int hp,int atk,char mon_name[20]){
+   printf("%s attack %s\n",player_name,mon_name);
+   hp=hp-atk;
+   //printf("%d\n",hp);
+   return hp;
+}
+int main()
+{
+    printf("Input your name with 20 char or less:");
+    gets(player_name);
+
+    struct player tester;
+
+    strcpy(tester.name, player_name);
+    tester.hp = 100;
+    tester.atk = 50;
+
+    struct monster slime;
+
+    strcpy(slime.name, "Slime");
+    slime.hp = 200;
+    slime.atk = 5;
+
+    printf("%s has hp %d and atk %d \n", tester.name, tester.hp, tester.atk);
+    slime.hp=attack(slime.hp,tester.atk,"Slime");
+    printf("Slime has hp %d\n",slime.hp );
+    create_map();
+
+}
