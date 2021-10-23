@@ -1,2 +1,2 @@
 # AllWorkEGCO1st
-all home work &amp; assignment
+All assignment in 1st EGCO
